@@ -1,0 +1,24 @@
+# Node modules (React frontend)
+node_modules/
+# Build output (React frontend)
+client/build
+client/dist
+api/__pycache__
+# Logs
+*.log
+# OS-specific files
+.DS_Store
+Thumbs.db
+# Flask specific
+api/instance
+*.db
+# Virtual environment
+venv/
+env/
+.venv/
+# PyCharm IDE
+.idea/
+# VS Code settings
+.vscode/
+# Docker
+docker-compose.override.yml

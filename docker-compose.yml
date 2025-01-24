@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: flask-docker
+    ports:
+      - "5000:5000"
+    restart: always
+    command: flask run --host=0.0.0.0
+  client:
+    build:
+      context: ./Client
+      dockerfile: Dockerfile
+    image: react-docker
+    ports:
+      - "5173:5173"
+    restart: always
