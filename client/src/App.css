@@ -235,3 +235,18 @@ input:checked + .slider:before {
   transform: translateX(25px); 
 }
 
+
+.graphs-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; 
+  align-items: center; 
+  flex-wrap: wrap; 
+}
+
+.graph {
+  flex: 1; 
+  min-width: 300px; 
+  max-width: 45%; 
+}
+

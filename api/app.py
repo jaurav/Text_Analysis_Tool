@@ -24,7 +24,7 @@ resource_fields = {
 class Analysis(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(500), nullable=False)
-    toxicity = db.Column(db.String, nullable=False)
+    toxicity = db.Column(db.Integer, nullable=False)
     gibberish = db.Column(db.String, nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -61,8 +61,8 @@ class AnalyzeText(Resource):
             # Save to the database
             new_analysis = Analysis(
                 text=text,
-                toxicity= f"{toxicity_toxic_prob}",  
-                gibberish= f"{gibberish_label} : {gibberish}",  
+                toxicity= toxicity_toxic_prob,  
+                gibberish= gibberish_label + " : " + gibberish,  
             )
             db.session.add(new_analysis)
             db.session.commit()

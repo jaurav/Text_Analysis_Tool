@@ -1,8 +1,14 @@
 import { useState, useEffect } from "react";
+import { Line } from "react-chartjs-2";
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
 import "./App.css"; // Import custom CSS styles
 
 const API_URL = import.meta.env.VITE_TRUSTWISE_APP_API;
 //const API_URL = "http://localhost:5000/api";
+
+
+// Register ChartJS components
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function App() {
   const [activeTab, setActiveTab] = useState("analysis");
@@ -88,6 +94,33 @@ function App() {
     }
   };
 
+  // Prepare data for graphs
+  const labels = history.map((entry, index) => `Entry ${index + 1}`);
+
+  const toxicityData = {
+    labels,
+    datasets: [
+      {
+        label: "Toxicity Score",
+        data: history.slice().reverse().map((entry) => entry.toxicity),
+        borderColor: "rgba(255, 99, 132, 1)",
+        backgroundColor: "rgba(255, 99, 132, 0.2)",
+      },
+    ],
+  };
+
+  const gibberishData = {
+    labels,
+    datasets: [
+      {
+        label: "Gibberish Score",
+        data: history.slice().reverse().map((entry) => parseFloat(entry.gibberish.split(":")[1]?.trim())),
+        borderColor: "rgba(54, 162, 235, 1)",
+        backgroundColor: "rgba(54, 162, 235, 0.2)",
+      },
+    ],
+  };
+
   return (
     <div className="app-container">
       <nav className="navbar">
@@ -158,7 +191,7 @@ function App() {
 
         {activeTab === "history" && (
           <section className="history-section">
-            <h2>History Analysis</h2>
+            <h2>Analysis History</h2>
             <table className="history-table">
               <thead>
                 <tr>
@@ -179,6 +212,20 @@ function App() {
                 ))}
               </tbody>
             </table>
+            <div className="graphs-container">
+              <div className="graph">
+                <Line
+                  data={toxicityData}
+                  options={{ responsive: true, plugins: { legend: { position: "top" } } }}
+                />
+              </div>
+              <div className="graph">
+                <Line
+                  data={gibberishData}
+                  options={{ responsive: true, plugins: { legend: { position: "top" } } }}
+                />
+              </div>
+            </div>
           </section>
         )}
 
