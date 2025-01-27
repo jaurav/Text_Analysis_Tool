@@ -98,7 +98,7 @@ function App() {
   const labels = history.map((entry, index) => `Entry ${index + 1}`);
 
   const toxicityData = {
-    labels,
+    labels: history.slice().reverse().map((entry) => entry.toxicity > 0.5 ? 'Toxic' : 'Neutral'),
     datasets: [
       {
         label: "Toxicity Score",
@@ -110,7 +110,7 @@ function App() {
   };
 
   const gibberishData = {
-    labels,
+    labels: history.slice().reverse().map((entry) => entry.gibberish.includes("gibberish") ? 'Gibberish' : 'Clean'),
     datasets: [
       {
         label: "Gibberish Score",
